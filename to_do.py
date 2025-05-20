@@ -1,67 +1,3 @@
-<<<<<<< HEAD
-# LISTA TO DO Z OPCJÄ„ DODAWANIA I ODEJMOWANIA RZECZY
-
-#Potrzeba:
-# opcja dodania rzeczy do chcecklisty
-# opcja wyswietlenia statusu czy rzecz jest wykonana klucz-wartoc
-# opcja usuwania rzeczy
-
-import json
-import time
-
-
-#  wczytanie listy zadan
-try:
-    with open('to_do_list.json','r') as file:
-        to_do_list = json.load(file)
-except FileNotFoundError:
-    to_do_list = {}
-
-# drukowanie aktualnej listy zadań z zapisanego pliku
-print("Aktualna lista zadań:") 
-for key, value in to_do_list.items():
-    print(f"{key}, status: {value}")
-
-
-# pierwsza pętla dodająca zadania
-while True:
-    print('')
-    task = input('Co jest do zrobienia? ').strip()
-    
-    if not task:
-        print('Nie można dodać pustego zadania!')
-        continue
-    to_do_list[task] = 'niewykonane'
-    
-    if task in to_do_list:
-        print(f"Zadanie '{task}' zostało już wczesniej dodane!")
-        continue
-    
-    print('')
-    question = input('Czy chcesz dodać kolejne zadania? T/N? ')
-    if question.lower() != 't':
-        break
-    
-  
-
-
-# drukowanie zaktualizowanej listy zadań
-print('')
-print("Aktualizacja zadań:")
-for key, value in to_do_list.items():
-    print(f"{key}, status: {value}")
-
-time.sleep(2)
-
-# zapisywanie listy zadań znóW do pliku
-with open('to_do_list.json', 'w') as file:
-    json.dump(to_do_list, file)
-
-
-
-=======
-import functions
-
 tasks = []
 
 def show_tasks():
@@ -77,18 +13,26 @@ def add_task():
     
 def delete_task():
     deleted = int(input('Które zadanie chcesz usunąć? '))
-    tasks.pop(deleted)
+    try:
+        tasks.pop(deleted)
+    except IndexError:
+        print('Nie ma zadania o takim numerze!')
+    return
 
 def save_to_file():
-    with open('tasks.txt', 'w') as file:
-        file.write(str(tasks))
-
+    with open('tasks.txt', 'a') as file:
+        for task in tasks:
+            file.write(str(task + '\n'))
+       
+    
 def read_from_file():
     with open('tasks.txt', 'r') as file:
         list_of_tasks = file.readlines()
         print('Aktualna lista zadań:')
-        print(list_of_tasks)
- 
+        for _ in list_of_tasks:
+            print(_)
+        
+
         
  
 while True:
@@ -101,7 +45,7 @@ while True:
     print('5. Odczytaj dane z pliku.')
     print('6. Wyjdź z programu.')
     
-    choice = input('Co chcesz zrobić? ')
+    choice = int(input('Co chcesz zrobić? '))
     
     if choice not in (1,2,3,4,5,6):
         print('To nie jest poprawne polecenie dla programu! Wybierz ponownie.\n')
@@ -117,7 +61,8 @@ while True:
         if choice == 5:
             read_from_file()
         if choice == 6:
-            exit(0)
+            print('Lista zadań zamknięta.')
+            break
             
     
     
@@ -126,6 +71,3 @@ while True:
 
     
     
-    
-    
->>>>>>> 516a349 (Napisano program od nowa, z opcją zapisu do pliku tekstowego, zdefiniowano większosc podstawowych funkcji)

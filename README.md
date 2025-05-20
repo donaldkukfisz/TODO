@@ -1,1 +1,1 @@
-Program będzie prostą listą to-do do użytku własnego, z opcją dodawania i odejmowania zadań + chciałbym stworzyć do niej interfejs graficzny.
+Program będący standardową listą to-do zapisującą do pliku tekstowego. Opcje dodań-usuń-wyświetl, podzielone na funkcje.
