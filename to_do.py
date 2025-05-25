@@ -7,7 +7,7 @@ def show_tasks():
     print('Aktualna lista zadań:\n')
 
     for task in tasks:
-        print(f"[{index}], {task}")
+        print(f"[{index}] {task}")
         index += 1
 
 def add_task():
@@ -34,19 +34,18 @@ def save_to_file():
        
     
 def read_from_file():
-    with open('tasks.txt', 'r') as file:
-        list_of_tasks = file.readlines()
-        print('Aktualna lista zadań:\n')
-        for _ in list_of_tasks:
-            print(_)
+    global tasks
+    
+    try:
+        with open('tasks.txt', 'r') as file:
+            tasks = [line.strip() for line in file.readlines()]
+        print('Zadania zostały załadowane z pliku.')
 
-try:
-    with open('tasks.txt', 'r') as file:
-        tasks = [line.strip() for line in file.readlines()]
-except FileNotFoundError:
-    tasks = []
+    except FileNotFoundError:
+        tasks = []
         
- 
+
+read_from_file()
 while True:
     
     print()
@@ -54,14 +53,13 @@ while True:
     print('2. Dodaj zadanie.')
     print('3. Usuń zadanie.')
     print('4. Zapisz zmiany.')
-    print('5. Odczytaj dane z pliku.')
-    print('6. Wyjdź z programu.')
+    print('5. Wyjdź z programu.')
     print()
     choice = input('Co chcesz zrobić? ')
     print()
     
     
-    if choice not in ('1','2','3','4','5','6'):
+    if choice not in ('1','2','3','4','5'):
         print('To nie jest poprawne polecenie dla programu! Wybierz ponownie.\n')
     else:
         if choice == '1':
@@ -73,7 +71,5 @@ while True:
         if choice == '4':
             save_to_file()
         if choice == '5':
-            read_from_file()
-        if choice == '6':
             print('Lista zadań zamknięta.')
             break
